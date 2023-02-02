@@ -13,7 +13,7 @@ class Control:
 
     def apply_buffer_sample(self):
         try:
-            # os.system(f'this_command_does_not_exist {buffer}')
+            # os.system(f'this_command_creates_an_error {buffer}')
             os.system(f'pw-metadata -n settings 0 clock.force-quantum {self.buffer}')
             os.system(f'pw-metadata -n settings 0 clock.force-rate {self.sample}')
         except Exception as e:
@@ -28,7 +28,7 @@ class Control:
         
         label_error = builder.get_object("label_error")
         label_error.set_text("Could not set the selected settings, make sure you have pipewire installed.")
-        
+
         window_error.show_all()
 
 class ControlWindow:
@@ -45,8 +45,11 @@ class ControlWindow:
         self.window.connect("destroy", Gtk.main_quit)
 
     """apply & close buttons"""
+    # This button is not working, In fact, it doesn't
+    # print the message either but the other two buttons
+    # do. I'm not sure what I am doing wrong :(
     def on_close_error_clicked(self, clicked):
-        # print("IS SOMETHING FUCKING HAPPENING?")
+        # print("IS SOMETHING HAPPENING?")
         window_error.hide()
 
     def on_close_clicked(self, clicked):
