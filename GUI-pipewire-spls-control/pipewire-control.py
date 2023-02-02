@@ -1,9 +1,19 @@
-import gi
-import os
+import gi # to use GTK
+import os # to run shell commands
 
-gi.require_version("Gtk", "3.0")
+gi.require_version("Gtk", "3.0") 
 from gi.repository import Gtk
 
+# BUFFER = 128 (probably don't want it defauled to 0)
+
+# I borrowed this whole part from a tutorial video to get started but 
+# I absolutely don't fully understand how it works more than that I 
+# open pipewire-control.glade, connect signals from it to functions
+# below, call and show the main window and connect the X-button to
+# close the program. The "self-references" I don't understand and
+# I have just noticed that all the code I have seem has them and 
+# it makes it actually work :D If anyone has some way of explaining
+# it to me I would be very thankful!
 class Control:
     def __init__(self):
         self.builder = Gtk.Builder()
@@ -15,7 +25,7 @@ class Control:
         self.window.connect("destroy", Gtk.main_quit)
     
     #def on_apply_clicked(self, clicked)
-        #os.system(f'pw-metadata -n settings 0 clock.force-quantum {input radio button}')
+        #os.system(f'pw-metadata -n settings 0 clock.force-quantum {BUFFER}')
 
     def on_close_clicked(self, clicked):
         Gtk.main_quit()
@@ -30,6 +40,12 @@ class Control:
     # os.system(f'pw-metadata -n settings 0 clock.force-quantum {BUFFER})
     def on_radio64_toggled(self, toggled):
         os.system('pw-metadata -n settings 0 clock.force-quantum 64')
+        # Example for change:
+        # BUFFER = 64
+        # return BUFFER
+
+        # Anyone know if there is a reason the commented out
+        # method would not work?
 
     def on_radio128_toggled(self, toggled):
         os.system('pw-metadata -n settings 0 clock.force-quantum 128')

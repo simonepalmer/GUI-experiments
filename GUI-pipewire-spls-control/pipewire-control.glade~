@@ -133,8 +133,8 @@
 currently not 
 implemented.
 
-activates right
-away!</property>
+clicks activates
+right away!</property>
           </object>
           <packing>
             <property name="x">150</property>
