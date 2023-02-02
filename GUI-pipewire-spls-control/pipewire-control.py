@@ -4,18 +4,38 @@ import os # to run shell commands
 gi.require_version("Gtk", "3.0") 
 from gi.repository import Gtk
 
-# BUFFER = 128 (probably don't want it defauled to 0)
-
-# I borrowed this whole part from a tutorial video to get started but 
-# I absolutely don't fully understand how it works more than that I 
-# open pipewire-control.glade, connect signals from it to functions
-# below, call and show the main window and connect the X-button to
-# close the program. The "self-references" I don't understand and
-# I have just noticed that all the code I have seem has them and 
-# it makes it actually work :D If anyone has some way of explaining
-# it to me I would be very thankful!
 class Control:
-    def __init__(self):
+    """Control class for business logic."""
+    
+    def __init__(self, buffer=64, sample=48000):
+        self.buffer = buffer
+        self.sample = sample
+
+    def apply_buffer_sample(self):
+        try:
+            # os.system(f'this_command_does_not_exist {buffer}')
+            os.system(f'pw-metadata -n settings 0 clock.force-quantum {self.buffer}')
+            os.system(f'pw-metadata -n settings 0 clock.force-rate {self.sample}')
+        except Exception as e:
+            self.show_error_window("An error occurred while applying the buffer and sample", str(e))
+
+    def show_error_window(self, title, message):
+        builder = Gtk.Builder()
+        builder.add_from_file("pipewire-control.glade")
+        
+        window_error = builder.get_object("window_error")
+        window_error.set_title("Pipewire error")
+        
+        label_error = builder.get_object("label_error")
+        label_error.set_text("Could not set the selected settings, make sure you have pipewire installed.")
+        
+        window_error.show_all()
+
+class ControlWindow:
+    """ControlWindow class for GUI logic."""
+
+    def __init__(self, control):
+        self.control = control
         self.builder = Gtk.Builder()
         self.builder.add_from_file("pipewire-control.glade")
         self.builder.connect_signals(self)
@@ -23,42 +43,44 @@ class Control:
         self.window = self.builder.get_object("window")
         self.window.show_all()
         self.window.connect("destroy", Gtk.main_quit)
-    
-    #def on_apply_clicked(self, clicked)
-        #os.system(f'pw-metadata -n settings 0 clock.force-quantum {BUFFER}')
+
+    """apply & close buttons"""
+    def on_close_error_clicked(self, clicked):
+        # print("IS SOMETHING FUCKING HAPPENING?")
+        window_error.hide()
 
     def on_close_clicked(self, clicked):
+        # print("closing")
         Gtk.main_quit()
 
-    # plan is for radio buttons to change a variable
-    # and the apply button to run the command but
-    # I am not sure about how to do that yet?
-
-    # Most likely I will assign a global variable like
-    # BUFFER and return it from radio buttons and then
-    # have apply run: 
-    # os.system(f'pw-metadata -n settings 0 clock.force-quantum {BUFFER})
+    def on_apply_clicked(self, clicked):
+        # print("appying")
+        self.control.apply_buffer_sample()
+    
+    """Buffer size radio buttons"""
     def on_radio64_toggled(self, toggled):
-        os.system('pw-metadata -n settings 0 clock.force-quantum 64')
-        # Example for change:
-        # BUFFER = 64
-        # return BUFFER
-
-        # Anyone know if there is a reason the commented out
-        # method would not work?
+        self.control.buffer = 64
 
     def on_radio128_toggled(self, toggled):
-        os.system('pw-metadata -n settings 0 clock.force-quantum 128')
+        self.control.buffer = 128
 
     def on_radio256_toggled(self, toggled):
-        os.system('pw-metadata -n settings 0 clock.force-quantum 256')
+        self.control.buffer = 256
 
     def on_radio512_toggled(self, toggled):
-        os.system('pw-metadata -n settings 0 clock.force-quantum 512')
+        self.control.buffer = 512
 
     def on_radio1024_toggled(self, toggled):
-        os.system('pw-metadata -n settings 0 clock.force-quantum 1024')
+        self.control.buffer = 1024
+
+    """Samaple rate radio buttons"""
+    def on_radio48_toggled(self, toggled):
+        self.control.sample = 48000
+
+    def on_radio44_toggled(self, toggled):
+        self.control.sample = 44100
 
 if __name__ == "__main__":
-    Control()
+    control = Control()
+    ControlWindow(control)
     Gtk.main()
