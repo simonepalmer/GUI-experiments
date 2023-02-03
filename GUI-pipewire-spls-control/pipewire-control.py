@@ -12,11 +12,9 @@ class Control:
         self.sample = sample
         self.control_window = None
 
-    """Checking if Pipewire is installed and apply settings"""
+    """If Pipewire is installed then apply settings, else show error"""
     def apply_settings(self):
-        # Check if pipewire is installed and show error if not.
         if os.popen('which pipewire').read() == '/usr/bin/pipewire\n':
-            # then try to catch other errors if it is but not working
             try:
                 os.system(f'pw-metadata -n settings 0 clock.force-quantum {self.buffer}')
                 self.control_window.label_buffer_settings.set_text(f"Sample size: {str(self.buffer)} samples")
@@ -24,23 +22,18 @@ class Control:
                 self.control_window.label_sample_settings.set_text(f"Sample rate: {str(self.sample)} kHz")
             except Exception as error:
                 message = "Pipewire is installed but can't set seleceted settings"
-                self.show_error_window(message, str(error))
+                self.control_window.on_error(message, str(error))
         else:
             message = "Pipewire can't be found, use the command: 'which pipewire' to see if it is installed"
-            self.show_error_window(message, "If not, install Pipewire and try again")
+            self.control_window.on_error(message, "If not, install Pipewire and try again")
 
-    """Showing error popup"""
-    def show_error_window(self, message, error):
-        builder = Gtk.Builder()
-        builder.add_from_file("pipewire-control.glade")
-        window_error = builder.get_object("window_error")
-
-        label_error = builder.get_object("label_error")
-        label_error.set_text(message)
-        label_hint = builder.get_object("label_hint")
-        label_hint.set_text(error)
-
-        window_error.show_all()
+    """Gettings current settings to show in main window"""
+    def get_current_settings(self):
+        current_settings = os.popen('pw-metadata -n settings').read()
+        settings_list = current_settings.split("'")
+        buffer = settings_list[-10]
+        samples = settings_list[-4]
+        return buffer, samples
 
 class ControlWindow:
     """ControlWindow class for GUI logic."""
@@ -54,16 +47,10 @@ class ControlWindow:
 
         self.window = self.builder.get_object("window")
 
-        # Should this block be in Control class?
-        # If I do, how do I call it from the next block to get the indexes?
-        self.default_settings = os.popen('pw-metadata -n settings').read()
-        self.replaced_settings = self.default_settings.replace("''", "'")
-        self.settings_list = self.replaced_settings.split("'")
-
         self.label_buffer_settings = self.builder.get_object("label_buffer_settings")
-        self.label_buffer_settings.set_text(f"Sample size: {self.settings_list[-8]} samples")
+        self.label_buffer_settings.set_text(f"Sample size: {self.control.get_current_settings()[0]} samples")
         self.label_sample_settings = self.builder.get_object("label_sample_settings")
-        self.label_sample_settings.set_text(f"Sample rate: {self.settings_list[-3]} kHz")
+        self.label_sample_settings.set_text(f"Sample rate: {self.control.get_current_settings()[1]} kHz")
 
         self.window.show_all()
         self.window.connect("destroy", Gtk.main_quit)
@@ -97,6 +84,19 @@ class ControlWindow:
 
     def on_radio44_toggled(self, toggled):
         self.control.sample = 44100
+
+    """Showing error popup"""
+    def on_error(self, message, error):
+        builder = Gtk.Builder()
+        builder.add_from_file("pipewire-control.glade")
+        window_error = builder.get_object("window_error")
+
+        label_error = builder.get_object("label_error")
+        label_error.set_text(message)
+        label_hint = builder.get_object("label_hint")
+        label_hint.set_text(error)
+
+        window_error.show_all()
 
 if __name__ == "__main__":
     control = Control()
