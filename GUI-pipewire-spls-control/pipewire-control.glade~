@@ -182,22 +182,23 @@
     </child>
   </object>
   <object class="GtkWindow" id="window_error">
-    <property name="width-request">200</property>
     <property name="height-request">0</property>
     <property name="can-focus">False</property>
-    <property name="title">Error</property>
+    <property name="title">Pipewire error</property>
     <child>
       <object class="GtkBox" id="box">
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="label_error">
+            <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-start">25</property>
-            <property name="margin-end">25</property>
-            <property name="margin-top">25</property>
-            <property name="margin-bottom">25</property>
-            <property name="label">An error occurred</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+            <property name="margin-top">15</property>
+            <property name="label" translatable="yes">Error label</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -206,16 +207,16 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="close_error">
-            <property name="label" translatable="yes">Close</property>
-            <property name="width-request">100</property>
-            <property name="height-request">40</property>
+          <object class="GtkLabel" id="label_hint">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
+            <property name="can-focus">False</property>
             <property name="halign">center</property>
-            <property name="margin-bottom">10</property>
-            <signal name="clicked" handler="on_close_error_clicked" swapped="no"/>
+            <property name="valign">center</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+            <property name="margin-top">10</property>
+            <property name="margin-bottom">15</property>
+            <property name="label" translatable="yes">Error hint</property>
           </object>
           <packing>
             <property name="expand">False</property>
