@@ -30,7 +30,7 @@
         </child>
         <child>
           <object class="GtkRadioButton" id="radio1024">
-            <property name="label" translatable="yes">1024spls</property>
+            <property name="label" translatable="yes">1024 samples</property>
             <property name="width-request">100</property>
             <property name="height-request">25</property>
             <property name="visible">True</property>
@@ -47,7 +47,7 @@
         </child>
         <child>
           <object class="GtkRadioButton" id="radio512">
-            <property name="label" translatable="yes">512spls</property>
+            <property name="label" translatable="yes">512 samples</property>
             <property name="width-request">100</property>
             <property name="height-request">25</property>
             <property name="visible">True</property>
@@ -64,7 +64,7 @@
         </child>
         <child>
           <object class="GtkRadioButton" id="radio256">
-            <property name="label" translatable="yes">256spls</property>
+            <property name="label" translatable="yes">256 samples</property>
             <property name="width-request">100</property>
             <property name="height-request">25</property>
             <property name="visible">True</property>
@@ -81,7 +81,7 @@
         </child>
         <child>
           <object class="GtkRadioButton" id="radio128">
-            <property name="label" translatable="yes">128spls</property>
+            <property name="label" translatable="yes">128 samples</property>
             <property name="width-request">100</property>
             <property name="height-request">25</property>
             <property name="visible">True</property>
@@ -98,7 +98,7 @@
         </child>
         <child>
           <object class="GtkRadioButton" id="radio64">
-            <property name="label" translatable="yes">64spls</property>
+            <property name="label" translatable="yes">64 samples</property>
             <property name="width-request">100</property>
             <property name="height-request">25</property>
             <property name="visible">True</property>
@@ -130,7 +130,7 @@
           <object class="GtkLabel" id="label_buffer">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Buffer size:</property>
+            <property name="label" translatable="yes">Sample size:</property>
           </object>
           <packing>
             <property name="x">5</property>
@@ -176,6 +176,34 @@
           <packing>
             <property name="x">180</property>
             <property name="y">45</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label_sample_settings">
+            <property name="width-request">10</property>
+            <property name="height-request">25</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="halign">baseline</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="x">130</property>
+            <property name="y">95</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label_buffer_settings">
+            <property name="width-request">10</property>
+            <property name="height-request">25</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="halign">baseline</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="x">130</property>
+            <property name="y">120</property>
           </packing>
         </child>
       </object>

@@ -10,6 +10,7 @@ class Control:
     def __init__(self, buffer=64, sample=48000):
         self.buffer = buffer
         self.sample = sample
+        self.control_window = None
 
     """Checking if Pipewire is installed and apply settings"""
     def apply_settings(self):
@@ -18,7 +19,9 @@ class Control:
             # then try to catch other errors if it is but not working
             try:
                 os.system(f'pw-metadata -n settings 0 clock.force-quantum {self.buffer}')
+                self.control_window.label_buffer_settings.set_text(f"Sample size: {str(self.buffer)} samples")
                 os.system(f'pw-metadata -n settings 0 clock.force-rate {self.sample}')
+                self.control_window.label_sample_settings.set_text(f"Sample rate: {str(self.sample)} kHz")
             except Exception as error:
                 message = "Pipewire is installed but can't set seleceted settings"
                 self.show_error_window(message, str(error))
@@ -44,21 +47,32 @@ class ControlWindow:
 
     def __init__(self, control):
         self.control = control
+        self.control.control_window = self
         self.builder = Gtk.Builder()
         self.builder.add_from_file("pipewire-control.glade")
         self.builder.connect_signals(self)
 
         self.window = self.builder.get_object("window")
+
+        # Should this block be in Control class?
+        # If I do, how do I call it from the next block to get the indexes?
+        self.default_settings = os.popen('pw-metadata -n settings').read()
+        self.replaced_settings = self.default_settings.replace("''", "'")
+        self.settings_list = self.replaced_settings.split("'")
+
+        self.label_buffer_settings = self.builder.get_object("label_buffer_settings")
+        self.label_buffer_settings.set_text(f"Sample size: {self.settings_list[-8]} samples")
+        self.label_sample_settings = self.builder.get_object("label_sample_settings")
+        self.label_sample_settings.set_text(f"Sample rate: {self.settings_list[-3]} kHz")
+
         self.window.show_all()
         self.window.connect("destroy", Gtk.main_quit)
 
     """apply & close buttons"""
     def on_close_clicked(self, clicked):
-        # print("closing")
         Gtk.main_quit()
 
     def on_apply_clicked(self, clicked):
-        # print("appying")
         self.control.apply_settings()
     
     """Buffer size radio buttons"""
