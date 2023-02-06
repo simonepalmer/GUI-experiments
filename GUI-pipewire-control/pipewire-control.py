@@ -13,6 +13,7 @@ class Control:
         self.control_window = None
 
     """If Pipewire is installed then apply settings, else show error"""
+
     def apply_settings(self):
         if os.popen('which pipewire').read() == '/usr/bin/pipewire\n':
             try:
@@ -23,17 +24,18 @@ class Control:
 
                 # I though about using the 'get_current_settings()' method to set the number here aswell
                 # but since the button methods already sets the buffer and samples to intergers for the 
-                # command to set the settings it seems stupid to not just use the same variables to for
-                # the label
+                # command to set the settings it seems stupid to not just use the same variables for the
+                # label too
 
             except Exception as error:
-                message = "Pipewire is installed but can't set seleceted settings"
+                message = "Pipewire is installed but selected settings can't be applied"
                 self.control_window.on_error(message, str(error))
         else:
             message = "Pipewire can't be found, use the command: 'which pipewire' to see if it is installed"
             self.control_window.on_error(message, "If not, install Pipewire and try again")
 
     """Gettings current settings to show in main window"""
+
     def get_current_settings(self):
         current_settings = os.popen('pw-metadata -n settings').read()
         settings_list = current_settings.split("'")
@@ -54,14 +56,21 @@ class Control:
 
         # I found 2 problems in the previous version of this method.
 
-        # 1st: If pipewire changes the order of their settings of in other ways change the format
-        # of the output the settings_list[-4] could be something completely different, however, the
+        # 1st: If pipewire changes the order of their settings or in other ways change the format
+        # of the output the settings_list[-4] could be something completely different, however, this
         # new way should be safer to not break since it's looking for the name of the settings it
         # wants the value for and then taking that index + 2 (+1 would be 'value:') 
+        # Full line reads -: update: id:0 key:'clock.rate' value:'48000' type:'' :- so split at "'"
+        # seems the best way to get the number by itself.
+        #
+        # I guess that if I would want to do it even more safe I could split at ":" and find the 
+        # index after the matched index, then take that string and loop though it to remove every
+        # character that is not a digit. So, safer but it I think it's a little bit convoluted
+        # so I don't know if I like the trade off
 
         # 2nd: Pipewire has a "default" and a 'forced' settings of these values. To make it always
         # show the correct current setting it needs to check if the forced value is '0', which it 
-        # will be after a reboot, and then take the default value instead.
+        # will be after a reboot, and then take the default value when opening the program instead.
 
 class ControlWindow:
     """ControlWindow class for GUI logic."""
@@ -84,6 +93,7 @@ class ControlWindow:
         self.window.connect("destroy", Gtk.main_quit)
 
     """apply & close buttons"""
+
     def on_close_clicked(self, clicked):
         Gtk.main_quit()
 
@@ -91,6 +101,7 @@ class ControlWindow:
         self.control.apply_settings()
     
     """Buffer size radio buttons"""
+
     def on_radio64_toggled(self, toggled):
         self.control.buffer = 64
 
@@ -107,6 +118,7 @@ class ControlWindow:
         self.control.buffer = 1024
 
     """Samaple rate radio buttons"""
+
     def on_radio48_toggled(self, toggled):
         self.control.samples = 48000
 
@@ -114,6 +126,7 @@ class ControlWindow:
         self.control.samples = 44100
 
     """Showing error message"""
+
     def on_error(self, message, error):
         builder = Gtk.Builder()
         builder.add_from_file("pipewire-control.glade")
