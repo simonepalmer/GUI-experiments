@@ -83,6 +83,7 @@ class ControlWindow:
         self.builder.connect_signals(self)
 
         self.window = self.builder.get_object("window")
+        self.window.set_title("Pipewire Controller")
 
         self.label_buffer_settings = self.builder.get_object("label_buffer_settings")
         self.label_buffer_settings.set_text(f"Sample size: {self.control.get_current_settings()[0]} samples")
