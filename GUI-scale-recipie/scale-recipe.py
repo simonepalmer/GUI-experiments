@@ -69,6 +69,7 @@ class ControlWindow:
         self.builder.connect_signals(self)
 
         self.window = self.builder.get_object("window")
+        self.window.set_title("Scale your recipes")
         self.window.show_all()
         self.window.connect("destroy", Gtk.main_quit)
 

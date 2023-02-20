@@ -2,11 +2,6 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkTextTag" id="size-tag">
-    <property name="font">Normal</property>
-    <property name="size">12</property>
-  </object>
-  <object class="GtkTextBuffer" id="textbuffer"/>
   <object class="GtkWindow" id="window">
     <property name="width-request">500</property>
     <property name="can-focus">False</property>
@@ -166,13 +161,13 @@
                   <object class="GtkTextView" id="input_box">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="tooltip-text" translatable="yes">Paste your recipe here (ctrl+v)</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="left-margin">5</property>
                     <property name="right-margin">5</property>
                     <property name="top-margin">5</property>
                     <property name="bottom-margin">5</property>
-                    <property name="buffer">textbuffer</property>
                     <property name="accepts-tab">False</property>
                   </object>
                 </child>
@@ -198,6 +193,7 @@
                   <object class="GtkTextView" id="output_box">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="tooltip-text" translatable="yes">After pressing apply your scaled recipe will appear here</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="editable">False</property>
@@ -229,6 +225,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="tooltip-text" translatable="yes">Calculate the recipe based on the selected scale</property>
                 <property name="margin-start">10</property>
                 <property name="margin-bottom">10</property>
                 <signal name="clicked" handler="on_apply_clicked" swapped="no"/>

@@ -161,6 +161,7 @@
                   <object class="GtkTextView" id="input_box">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="tooltip-text" translatable="yes">Paste your recipe here (ctrl+v)</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="left-margin">5</property>
@@ -192,6 +193,7 @@
                   <object class="GtkTextView" id="output_box">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="tooltip-text" translatable="yes">After pressing apply your scaled recipe will appear here</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="editable">False</property>
@@ -223,6 +225,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="tooltip-text" translatable="yes">Calculate the recipe based on the selected scale</property>
                 <property name="margin-start">10</property>
                 <property name="margin-bottom">10</property>
                 <signal name="clicked" handler="on_apply_clicked" swapped="no"/>
