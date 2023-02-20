@@ -3,7 +3,6 @@
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkWindow" id="window">
-    <property name="width-request">500</property>
     <property name="can-focus">False</property>
     <child>
       <object class="GtkBox" id="sections">
@@ -11,57 +10,22 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <!-- n-columns=7 n-rows=1 -->
+          <!-- n-columns=11 n-rows=1 -->
           <object class="GtkGrid" id="grid_top">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
             <property name="margin-top">10</property>
             <child>
               <object class="GtkRadioButton" id="radio1">
                 <property name="label" translatable="yes">50%</property>
-                <property name="width-request">60</property>
+                <property name="width-request">55</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="halign">center</property>
                 <property name="active">True</property>
                 <property name="draw-indicator">True</property>
                 <signal name="toggled" handler="on_radio1_toggled" swapped="no"/>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkRadioButton" id="radio2">
-                <property name="label" translatable="yes">75%</property>
-                <property name="width-request">60</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="active">True</property>
-                <property name="draw-indicator">True</property>
-                <property name="group">radio1</property>
-                <signal name="toggled" handler="on_radio2_toggled" swapped="no"/>
-              </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkRadioButton" id="radio3">
-                <property name="label" translatable="yes">100%</property>
-                <property name="width-request">60</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="active">True</property>
-                <property name="draw-indicator">True</property>
-                <property name="group">radio1</property>
-                <signal name="toggled" handler="on_radio3_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="left-attach">2</property>
@@ -69,16 +33,17 @@
               </packing>
             </child>
             <child>
-              <object class="GtkRadioButton" id="radio4">
-                <property name="label" translatable="yes">125%</property>
-                <property name="width-request">60</property>
+              <object class="GtkRadioButton" id="radio2">
+                <property name="label" translatable="yes">75%</property>
+                <property name="width-request">55</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="halign">center</property>
                 <property name="active">True</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">radio1</property>
-                <signal name="toggled" handler="on_radio4_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_radio2_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="left-attach">3</property>
@@ -86,15 +51,17 @@
               </packing>
             </child>
             <child>
-              <object class="GtkRadioButton" id="radio5">
-                <property name="label" translatable="yes">150%</property>
+              <object class="GtkRadioButton" id="radio3">
+                <property name="label" translatable="yes">100%</property>
+                <property name="width-request">55</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="halign">center</property>
                 <property name="active">True</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">radio1</property>
-                <signal name="toggled" handler="on_radio5_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_radio3_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="left-attach">4</property>
@@ -102,15 +69,17 @@
               </packing>
             </child>
             <child>
-              <object class="GtkRadioButton" id="radio6">
-                <property name="label" translatable="yes">175%</property>
+              <object class="GtkRadioButton" id="radio4">
+                <property name="label" translatable="yes">125%</property>
+                <property name="width-request">55</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="halign">center</property>
                 <property name="active">True</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">radio1</property>
-                <signal name="toggled" handler="on_radio6_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_radio4_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="left-attach">5</property>
@@ -118,18 +87,104 @@
               </packing>
             </child>
             <child>
-              <object class="GtkRadioButton" id="radio7">
-                <property name="label" translatable="yes">200%</property>
+              <object class="GtkRadioButton" id="radio5">
+                <property name="label" translatable="yes">150%</property>
+                <property name="width-request">55</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="halign">center</property>
+                <property name="active">True</property>
+                <property name="draw-indicator">True</property>
+                <property name="group">radio1</property>
+                <signal name="toggled" handler="on_radio5_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left-attach">6</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="radio6">
+                <property name="label" translatable="yes">175%</property>
+                <property name="width-request">55</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="halign">center</property>
+                <property name="active">True</property>
+                <property name="draw-indicator">True</property>
+                <property name="group">radio1</property>
+                <signal name="toggled" handler="on_radio6_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left-attach">7</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="radio7">
+                <property name="label" translatable="yes">200%</property>
+                <property name="width-request">55</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="halign">center</property>
                 <property name="active">True</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">radio1</property>
                 <signal name="toggled" handler="on_radio7_toggled" swapped="no"/>
               </object>
               <packing>
-                <property name="left-attach">6</property>
+                <property name="left-attach">8</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">start</property>
+                <property name="margin-start">10</property>
+                <property name="margin-end">5</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">end</property>
+                <property name="margin-start">5</property>
+                <property name="margin-end">10</property>
+              </object>
+              <packing>
+                <property name="left-attach">10</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="hexpand">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="hexpand">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">9</property>
                 <property name="top-attach">0</property>
               </packing>
             </child>
